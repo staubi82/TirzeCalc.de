@@ -123,6 +123,13 @@ h2 {
   align-items: stretch;   /* alle Zellen gleich hoch */
 }
 
+/* Auf größeren Bildschirmen: 3 Buttons pro Zeile für symmetrische Anordnung */
+@media (min-width: 769px) {
+  .pen-selection {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
 .pen-button {
   display: flex; align-items: center; justify-content: center;
   width: 100%;
