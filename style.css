@@ -468,6 +468,7 @@ footer a:hover {
         min-height: 100dvh; /* Dynamische Viewport-Höhe */
         height: 100vh;
         height: 100dvh; /* Nutzt die komplette verfügbare Höhe */
+        overflow: hidden; /* Verhindert Scrollen außerhalb des Viewports */
     }
     
     .container {
@@ -478,6 +479,7 @@ footer a:hover {
         flex-direction: column;
         padding: 0;
         margin: 0;
+        justify-content: space-between; /* Optimale Raumverteilung */
     }
     
     .top-bar {
