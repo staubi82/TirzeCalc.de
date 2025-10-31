@@ -1,702 +1,224 @@
 /*
- * Minimalistisches & professionelles Design für TirzeCalc.de
- * Optimiert für dynamische Vollbild-Mobile-Ansicht
+ * TirzeCalc.de – responsives, höhenstabiles Layout
  */
 
-/* Reset für bessere mobile Kompatibilität */
-* {
-    box-sizing: border-box;
-}
+/* Reset */
+* { box-sizing: border-box; }
 
-html {
-    height: 100%;
-    height: 100dvh; /* Dynamische Viewport-Höhe */
-}
+/* Viewport-Setup */
+html, body { height: 100%; }
+html { height: 100dvh; }
 
+/* Theme Vars */
 :root {
-    /* Dunkler Modus (Standard) */
-    --background: #1c1c1c; 
-    --text-primary: #f0f0f0;
-    --text-secondary: #9a9a9a;
-    --card-background: #282828;
-    --border-color: #383838;
-    --primary-color: #588e99; /* Dezentes Petrol/Blau-Grau */
-    --shadow-color: rgba(0, 0, 0, 0.7);
-
-    /* Pen Farben (Minimalistisch: Nur die Akzentfarbe) */
-    --pen-color-active: var(--primary-color);
+  --background: #1c1c1c;
+  --text-primary: #f0f0f0;
+  --text-secondary: #9a9a9a;
+  --card-background: #282828;
+  --border-color: #383838;
+  --primary-color: #588e99;
+  --shadow-color: rgba(0, 0, 0, 0.7);
+  --pen-color-active: var(--primary-color);
 }
 
-/* Heller Modus */
+/* Light Mode */
 body.light-mode {
-    --background: #f0f0f0;
-    --text-primary: #1c1c1c;
-    --text-secondary: #666;
-    --card-background: #ffffff;
-    --border-color: #e0e0e0;
-    --shadow-color: rgba(0, 0, 0, 0.1);
+  --background: #f0f0f0;
+  --text-primary: #1c1c1c;
+  --text-secondary: #666;
+  --card-background: #ffffff;
+  --border-color: #e0e0e0;
+  --shadow-color: rgba(0, 0, 0, 0.1);
 }
 
+/* Seitenraster: Header / Main / Footer passt sich Bildschirmhöhe an */
 body {
-    font-family: 'Inter', 'Segoe UI', sans-serif;
-    background-color: var(--background);
-    color: var(--text-primary);
-    transition: background-color 0.4s, color 0.4s;
-    margin: 0;
-    padding: 20px 10px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    min-height: 100vh;
-    min-height: 100dvh; /* Dynamische Viewport-Höhe für mobile Geräte */
+  margin: 0;
+  background: var(--background);
+  color: var(--text-primary);
+  font-family: 'Inter','Segoe UI',sans-serif;
+  transition: background-color .4s, color .4s;
+
+  display: grid;
+  grid-template-rows: auto 1fr auto;  /* Header – Inhalt – Footer */
+  min-height: 100dvh;
 }
 
-.container {
-    width: 100%;
-    max-width: 650px;
-    margin: auto;
-}
-
-header {
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-h1 {
-    font-weight: 300;
-    letter-spacing: 1px;
-    margin-bottom: 8px;
-    font-size: 1.8em;
-}
-
-.description {
-    font-size: 0.95em;
-    color: var(--text-secondary);
-    max-width: 450px;
-    margin: 0 auto;
-}
-
-/* --- Card-Stil (Flaches Design) --- */
-.card {
-    background-color: var(--card-background);
-    border-radius: 8px;
-    padding: 18px;
-    margin-bottom: 18px;
-    box-shadow: 0 4px 8px var(--shadow-color);
-    transition: background-color 0.3s;
-}
-
-h2 {
-    font-size: 1.2em;
-    font-weight: 600;
-    margin-top: 0;
-    padding-bottom: 6px;
-    border-bottom: 1px solid var(--border-color);
-    color: var(--text-primary);
-    margin-bottom: 15px;
-}
-
-/* --- Top Bar & Toggle --- */
+/* Top-Bar (Header) */
 .top-bar {
-    display: flex;
-    justify-content: flex-end;
-    margin-bottom: 12px;
-    align-items: center;
-    width: 100%;
-    max-width: 650px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 10px;
+  width: 100%;
+  max-width: 700px;
+  margin: 0 auto;
 }
 
 .lang-btn {
-    background: none;
-    border: none;
-    color: var(--text-secondary);
-    cursor: pointer;
-    transition: color 0.2s, font-weight 0.2s;
+  background: none; border: none; cursor: pointer;
+  color: var(--text-secondary);
+  transition: color .2s, font-weight .2s;
 }
-.lang-btn.active-lang {
-    color: var(--text-primary);
-    font-weight: bold;
-}
+.lang-btn.active-lang { color: var(--text-primary); font-weight: 700; }
 
 .site-title {
-    color: var(--text-primary);
-    text-decoration: none;
-    font-weight: 600;
-    font-size: 1.1em;
-    transition: color 0.2s;
-    padding: 4px 8px;
-    border-radius: 4px;
+  color: var(--text-primary); text-decoration: none; font-weight: 600; font-size: 1.1em;
+  padding: 4px 8px; border-radius: 4px; transition: color .2s, background-color .2s;
 }
+.site-title:hover { color: var(--primary-color); background: rgba(88,142,153,.1); }
 
-.site-title:hover {
-    color: var(--primary-color);
-    background-color: rgba(88, 142, 153, 0.1);
-}
-
-.switch {
-    position: relative;
-    display: inline-block;
-    width: 40px; 
-    height: 20px;
-    margin: 0 10px;
-}
-
+.switch { position: relative; width: 40px; height: 20px; }
 .switch input { opacity: 0; width: 0; height: 0; }
-
 .slider {
-    position: absolute;
-    cursor: pointer;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: var(--border-color);
-    transition: .4s;
-    border-radius: 20px;
+  position: absolute; inset: 0; border-radius: 20px; background: var(--border-color); transition: .4s;
 }
-
 .slider:before {
-    position: absolute;
-    content: "";
-    height: 14px;
-    width: 14px;
-    left: 3px;
-    bottom: 3px;
-    background-color: white;
-    transition: .4s;
-    border-radius: 50%;
+  content: ""; position: absolute; left: 3px; bottom: 3px; width: 14px; height: 14px;
+  border-radius: 50%; background: #fff; transition: .4s;
+}
+input:checked + .slider { background: var(--primary-color); }
+input:checked + .slider:before { transform: translateX(20px); }
+
+.mode-toggle-container { display: flex; align-items: center; gap: 8px; }
+.mode-icon { color: var(--text-secondary); opacity: .8; transition: opacity .3s, color .3s; }
+.mode-icon:hover { opacity: 1; }
+body.dark-mode .dark-icon { color: var(--text-primary); opacity: 1; }
+body.dark-mode .light-icon { opacity: .4; }
+body.light-mode .light-icon { color: var(--text-primary); opacity: 1; }
+body.light-mode .dark-icon { opacity: .4; }
+
+/* Hauptinhalt (Main) – zentriert, scrollt bei Platzmangel */
+.container {
+  width: min(100%, 700px);
+  margin: 0 auto;
+  padding: 10px;
+  overflow: auto;              /* nur der Inhalt scrollt, Seite bleibt im Viewport */
 }
 
-input:checked + .slider {
-    background-color: var(--primary-color);
+header { text-align: center; margin-bottom: 20px; }
+h1 { font-weight: 300; letter-spacing: 1px; margin: 0 0 8px; font-size: 1.8em; }
+.description { font-size: .95em; color: var(--text-secondary); max-width: 450px; margin: 0 auto; }
+
+/* Karten */
+.card {
+  background: var(--card-background);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 18px;
+  margin-bottom: 18px;
+  box-shadow: 0 4px 8px var(--shadow-color);
+}
+h2 {
+  font-size: 1.2em; font-weight: 600; margin: 0 0 15px;
+  padding-bottom: 6px; border-bottom: 1px solid var(--border-color);
 }
 
-input:checked + .slider:before {
-    transform: translateX(20px);
-}
-
-/* --- Mode Toggle Icons --- */
-.mode-toggle-container {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.mode-icon {
-    opacity: 0.8;
-    transition: opacity 0.3s, color 0.3s;
-    color: var(--text-secondary);
-}
-
-.mode-icon:hover {
-    opacity: 1;
-}
-
-/* Dark Mode: Mond-Icon sichtbar, Sonne-Icon versteckt */
-body.dark-mode .dark-icon {
-    color: var(--text-primary);
-    opacity: 1;
-}
-
-body.dark-mode .light-icon {
-    opacity: 0.4;
-}
-
-/* Light Mode: Sonne-Icon sichtbar, Mond-Icon versteckt */
-body.light-mode .light-icon {
-    color: var(--text-primary);
-    opacity: 1;
-}
-
-body.light-mode .dark-icon {
-    opacity: 0.4;
-}
-
-/* --- Pen Auswahl Buttons --- */
+/* Pen-Kacheln – stabil, ohne aspect-ratio (verhindert „rissig“) */
 .pen-selection {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 8px;
-    margin-top: 12px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 12px;
+  align-items: stretch;   /* alle Zellen gleich hoch */
 }
 
 .pen-button {
-    background-color: var(--card-background);
-    color: var(--text-primary);
-    border: 1px solid var(--border-color);
-    padding: 14px 5px;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 1.15em;
-    font-weight: 500;
-    transition: all 0.2s;
-    text-align: center;
-}
+  display: flex; align-items: center; justify-content: center;
+  width: 100%;
+  min-height: clamp(56px, 12vw, 90px);   /* statt aspect-ratio -> keine Subpixel-Probleme */
+  padding: 0 8px;
 
-.pen-button:hover:not(.active) {
-    border-color: var(--primary-color);
-}
+  background: var(--card-background);
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: clamp(0.95rem, 2.8vw, 1.05rem);
+  text-align: center;
+  transition: border-color .2s, box-shadow .2s, background-color .2s;
 
+  white-space: nowrap;          /* kein Umbruch */
+  word-break: keep-all;
+  line-height: 1.1;
+  font-variant-numeric: tabular-nums;
+}
+.pen-button:hover:not(.active) { border-color: var(--primary-color); }
 .pen-button.active {
-    background-color: var(--pen-color-active);
-    color: var(--background); 
-    border-color: var(--pen-color-active);
-    font-weight: 700;
-    box-shadow: 0 0 10px rgba(88, 142, 153, 0.5); 
+  background: var(--pen-color-active);
+  color: var(--background);
+  border-color: var(--pen-color-active);
+  box-shadow: 0 0 10px rgba(88,142,153,.5);
 }
 
-
-/* --- Dosis Schieberegler --- */
-.dose-display {
-    text-align: center;
-    font-size: 2.8em;
-    font-weight: 700;
-    margin-bottom: 8px;
-    color: var(--primary-color);
-}
-
-/* Clean slider design with proper tick marks */
-.dose-slider-wrapper {
-    position: relative;
-    width: 100%;
-    margin: 20px 0;
-    padding: 0 12px;
-}
-
+/* Dosis/Slider */
+.dose-display { text-align: center; font-size: 2.6em; font-weight: 700; margin-bottom: 8px; color: var(--primary-color); }
+.dose-slider-wrapper { position: relative; width: 100%; margin: 20px 0; padding: 0 12px; }
 input[type="range"] {
-    width: 100%;
-    height: 6px;
-    background: var(--border-color);
-    border-radius: 3px;
-    -webkit-appearance: none;
-    cursor: pointer;
-    margin: 0;
+  width: 100%; height: 6px; margin: 0; cursor: pointer; -webkit-appearance: none;
+  background: var(--border-color); border-radius: 3px;
 }
-
-/* Tick marks as dots below the slider */
-.slider-ticks {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 8px;
-    padding: 0 6px;
-}
-
-.tick {
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background-color: var(--text-secondary);
-    opacity: 0.5;
-}
-
-.tick.active {
-    background-color: var(--primary-color);
-    opacity: 1;
-    transform: scale(1.2);
-}
-
-/* Standard slider thumb */
+.slider-ticks { display: flex; justify-content: space-between; margin-top: 8px; padding: 0 6px; }
+.tick { width: 6px; height: 6px; border-radius: 50%; background: var(--text-secondary); opacity: .5; }
+.tick.active { background: var(--primary-color); opacity: 1; transform: scale(1.2); }
 input[type="range"]::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    height: 20px;
-    width: 20px;
-    border-radius: 50%;
-    background: var(--primary-color);
-    cursor: pointer;
-    border: 3px solid var(--card-background);
-    box-shadow: 0 0 5px var(--shadow-color);
+  -webkit-appearance: none; width: 20px; height: 20px; border-radius: 50%;
+  background: var(--primary-color); border: 3px solid var(--card-background); box-shadow: 0 0 5px var(--shadow-color);
 }
-
-/* Firefox thumb */
 input[type="range"]::-moz-range-thumb {
-    height: 20px;
-    width: 20px;
-    border-radius: 50%;
-    background: var(--primary-color);
-    cursor: pointer;
-    border: 3px solid var(--card-background);
-    box-shadow: 0 0 5px var(--shadow-color);
+  width: 20px; height: 20px; border-radius: 50%;
+  background: var(--primary-color); border: 3px solid var(--card-background); box-shadow: 0 0 5px var(--shadow-color);
 }
+.dose-info { display: flex; justify-content: space-between; font-size: .85em; color: var(--text-secondary); padding: 0 5px; }
+.dose-info span { font-weight: 600; }
 
-/* Larger slider for mobile devices */
-@media (max-width: 768px) {
-    .dose-slider-wrapper {
-        margin: 25px 0;
-        padding: 0 14px;
-    }
-    
-    input[type="range"] {
-        height: 8px;
-    }
-    
-    input[type="range"]::-webkit-slider-thumb {
-        height: 24px;
-        width: 24px;
-    }
-    
-    input[type="range"]::-moz-range-thumb {
-        height: 24px;
-        width: 24px;
-    }
-    
-    .slider-ticks {
-        margin-top: 10px;
-    }
-    
-    .tick {
-        width: 7px;
-        height: 7px;
-    }
-}
-
-@media (max-width: 480px) {
-    .dose-slider-wrapper {
-        margin: 30px 0;
-        padding: 0 16px;
-    }
-    
-    input[type="range"] {
-        height: 10px;
-    }
-    
-    input[type="range"]::-webkit-slider-thumb {
-        height: 28px;
-        width: 28px;
-    }
-    
-    input[type="range"]::-moz-range-thumb {
-        height: 28px;
-        width: 28px;
-    }
-    
-    .slider-ticks {
-        margin-top: 12px;
-    }
-    
-    .tick {
-        width: 8px;
-        height: 8px;
-    }
-}
-
-.dose-info {
-    display: flex;
-    justify-content: space-between;
-    font-size: 0.85em;
-    color: var(--text-secondary);
-    padding: 0 5px;
-}
-.dose-info span {
-     font-weight: 600;
-}
-
-/* --- Ergebnis --- */
+/* Ergebnis */
 .result-box {
-    padding: 25px 18px;
-    background-color: var(--card-background);
-    color: var(--text-primary);
-    border-radius: 8px;
-    border: 2px solid var(--primary-color);
-    margin-top: 20px;
-    text-align: center;
+  padding: 25px 18px; text-align: center;
+  background: var(--card-background); color: var(--text-primary);
+  border: 2px solid var(--primary-color); border-radius: 8px; margin-top: 20px;
 }
+.result-box h3 { margin: 0 0 4px; font-weight: 500; color: var(--text-secondary); }
+.kicks-result { font-size: 4.0em; font-weight: 900; line-height: 1; color: var(--primary-color); }
 
-.result-box h3 {
-    margin: 0 0 4px 0;
-    font-weight: 500;
-    color: var(--text-secondary);
-}
-
-.kicks-result {
-    font-size: 4.2em;
-    font-weight: 900;
-    line-height: 1;
-    color: var(--primary-color);
-}
-
-/* --- Footer (Kompakt) --- */
+/* Footer (unten fix im Raster, nicht „sticky“) */
 footer {
-    margin-top: 20px;
-    text-align: center;
-    color: var(--text-secondary);
-    padding: 12px 0 8px 0;
-    border-top: 1px solid var(--border-color);
-    font-size: 0.75em;
+  margin: 0;
+  padding: 12px 10px 8px;
+  border-top: 1px solid var(--border-color);
+  color: var(--text-secondary);
+  font-size: .75em;
 }
-
 .footer-compact {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 8px;
-    flex-wrap: wrap;
-    margin-bottom: 6px;
+  display: flex; justify-content: center; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 6px;
 }
-
-.footer-compact .separator {
-    opacity: 0.5;
-}
-
+.footer-compact .separator { opacity: .5; }
 .footer-disclaimer {
-    font-size: 0.7em;
-    opacity: 0.6;
-    margin: 6px 0 0 0;
-    max-width: 350px;
-    margin-left: auto;
-    margin-right: auto;
-    line-height: 1.3;
+  font-size: .7em; opacity: .6; margin: 6px auto 0; max-width: 350px; line-height: 1.3; text-align: center;
 }
+footer a { color: var(--primary-color); text-decoration: none; padding: 1px 3px; border-radius: 2px; transition: color .2s, background-color .2s; }
+footer a:hover { color: var(--text-primary); background: rgba(88,142,153,.1); }
 
-footer a {
-    color: var(--primary-color);
-    text-decoration: none;
-    transition: all 0.2s ease;
-    padding: 1px 3px;
-    border-radius: 2px;
+/* Responsive Tweaks */
+@media (max-width: 768px) {
+  .dose-display { font-size: 2.2em; }
+  input[type="range"] { height: 8px; }
+  input[type="range"]::-webkit-slider-thumb,
+  input[type="range"]::-moz-range-thumb { width: 24px; height: 24px; }
+  .tick { width: 7px; height: 7px; }
 }
-
-footer a:hover {
-    color: var(--text-primary);
-    background-color: rgba(88, 142, 153, 0.1);
-}
-
-/* --- Mobile Optimierung --- */
 @media (max-width: 480px) {
-    body {
-        padding: 8px 4px;
-        min-height: 100vh;
-        min-height: 100dvh; /* Dynamische Viewport-Höhe */
-        height: 100vh;
-        height: 100dvh; /* Nutzt die komplette verfügbare Höhe */
-        overflow: hidden; /* Verhindert Scrollen außerhalb des Viewports */
-    }
-    
-    .container {
-        max-width: 100%;
-        width: 100%;
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-        padding: 0;
-        margin: 0;
-        justify-content: space-between; /* Optimale Raumverteilung */
-    }
-    
-    .top-bar {
-        margin-bottom: 8px;
-        padding: 0 4px;
-    }
-    
-    header {
-        margin-bottom: 12px;
-        padding: 0 4px;
-    }
-    
-    .card {
-        padding: 12px;
-        margin-bottom: 8px;
-        margin-left: 4px;
-        margin-right: 4px;
-        border-radius: 6px;
-    }
-    
-    .pen-selection {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 6px;
-        margin-top: 8px;
-    }
-    
-    .pen-button {
-        padding: 10px 4px;
-        font-size: 0.9em;
-    }
-    
-    .pen-info-display {
-        padding: 8px;
-        margin-bottom: 10px;
-        gap: 10px;
-    }
-    
-    .pen-info-label {
-        font-size: 0.7em;
-    }
-    
-    .pen-info-value {
-        font-size: 0.9em;
-    }
-    
-    .dose-display {
-        font-size: 1.8em;
-        margin-bottom: 6px;
-    }
-    
-    .result-box {
-        padding: 15px 12px;
-        margin-top: 12px;
-        margin-left: 4px;
-        margin-right: 4px;
-        border-radius: 6px;
-    }
-    
-    .kicks-result {
-        font-size: 2.5em;
-    }
-    
-    h1 {
-        font-size: 1.2em;
-        margin-bottom: 8px;
-    }
-    
-    h2 {
-        font-size: 0.9em;
-        padding-bottom: 4px;
-        margin-bottom: 8px;
-    }
-    
-    footer {
-        margin-top: auto;
-        padding: 10px 8px 6px 8px;
-        font-size: 0.65em;
-    }
-    
-    .footer-compact {
-        gap: 6px;
-        margin-bottom: 4px;
-    }
-    
-    .footer-disclaimer {
-        font-size: 0.6em;
-        margin: 4px 0 0 0;
-        line-height: 1.2;
-    }
-    
-    .dose-info {
-        font-size: 0.8em;
-    }
-    
-    input[type="range"] {
-        margin: 8px 0;
-    }
+  .top-bar { padding: 10px 8px; }
+  .container { padding: 8px 6px; }
+  .card { padding: 12px; margin-bottom: 12px; }
+  .pen-selection { gap: 10px; }
+  .pen-button { min-height: clamp(52px, 15vw, 84px); font-size: clamp(0.9rem, 3.2vw, 1rem); }
+  .dose-display { font-size: 1.8em; }
+  .result-box { padding: 15px 12px; }
+  h1 { font-size: 1.2em; }
+  h2 { font-size: .95em; }
 }
-
-@media (min-width: 481px) and (max-width: 600px) {
-    .pen-selection {
-        grid-template-columns: repeat(3, 1fr);
-        gap: 8px;
-        margin-top: 12px;
-    }
-    
-    .pen-button {
-        padding: 12px 5px;
-        font-size: 1em;
-    }
-    
-    .dose-display {
-        font-size: 2.2em;
-        margin-bottom: 8px;
-    }
-    
-    .kicks-result {
-        font-size: 3.5em;
-    }
-    
-    .card {
-        padding: 15px;
-        margin-bottom: 15px;
-    }
-    
-    .result-box {
-        padding: 20px 15px;
-        margin-top: 20px;
-    }
-}
-
-@media (min-width: 601px) and (max-width: 1024px) {
-    .pen-selection {
-        grid-template-columns: repeat(6, 1fr);
-        gap: 10px;
-        margin-top: 15px;
-    }
-    
-    .pen-button {
-        padding: 14px 5px;
-        font-size: 1.1em;
-    }
-    
-    .dose-display {
-        font-size: 2.5em;
-        margin-bottom: 10px;
-    }
-    
-    .kicks-result {
-        font-size: 4em;
-    }
-    
-    .card {
-        padding: 20px;
-        margin-bottom: 20px;
-    }
-    
-    .result-box {
-        padding: 30px 20px;
-        margin-top: 25px;
-    }
-    
-    header {
-        margin-bottom: 30px;
-    }
-    
-    h1 {
-        font-size: 1.8em;
-        margin-bottom: 8px;
-    }
-}
-
-@media (min-width: 1025px) {
-    .container {
-        max-width: 700px;
-    }
-    
-    .pen-selection {
-        grid-template-columns: repeat(6, 1fr);
-        gap: 12px;
-        margin-top: 15px;
-    }
-    
-    .pen-button {
-        padding: 16px 5px;
-        font-size: 1.1em;
-    }
-    
-    .dose-display {
-        font-size: 2.5em;
-        margin-bottom: 12px;
-    }
-    
-    .kicks-result {
-        font-size: 4em;
-    }
-    
-    .card {
-        padding: 22px;
-        margin-bottom: 22px;
-    }
-    
-    .result-box {
-        padding: 32px 22px;
-        margin-top: 28px;
-    }
-    
-    header {
-        margin-bottom: 35px;
-    }
-    
-    h1 {
-        font-size: 2em;
-        margin-bottom: 10px;
-    }
-    
-    footer {
-        margin-top: 40px;
-    }
+@media (max-width: 360px) {
+  .pen-selection { grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); }
 }

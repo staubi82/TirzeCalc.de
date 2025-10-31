@@ -1,101 +1,105 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-    <meta http-equiv="Pragma" content="no-cache">
-    <meta http-equiv="Expires" content="0">
-    <meta name="theme-color" content="#767474">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="default">
-    <meta name="apple-mobile-web-app-title" content="TirzeCalc.de">
-    <title>TirzeCalc.de - Mounjaro Dosierungsrechner</title>
-    
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
-    <link rel="shortcut icon" href="favicon.ico">
-    <link rel="icon" type="image/svg+xml" href="favicon.svg">
-    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
-    <link rel="manifest" href="site.webmanifest">
-    <link rel="stylesheet" href="style.css?v=2.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+  <meta name="theme-color" content="#767474" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-title" content="TirzeCalc.de" />
+  <title>TirzeCalc.de - Mounjaro Dosierungsrechner</title>
+
+  <link rel="icon" type="image/x-icon" href="favicon.ico" />
+  <link rel="shortcut icon" href="favicon.ico" />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
+  <link rel="manifest" href="site.webmanifest" />
+  <link rel="stylesheet" href="style.css?v=2.2" />
 </head>
+
 <body class="dark-mode">
-    <div class="top-bar">
-        <button class="lang-btn active-lang" data-lang="de">DE</button>
-        <span style="color: var(--text-secondary);">|</span>
-        <button class="lang-btn" data-lang="en">EN</button>
-        <span style="flex-grow: 1;"></span>
-        <a href="index.html" class="site-title" id="siteTitle">TirzeCalc.de</a>
-        <span style="flex-grow: 1;"></span>
-        <div class="mode-toggle-container">
-            <svg class="mode-icon dark-icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-0.92-0.1-1.36c-0.98,1.37-2.58,2.26-4.4,2.26 c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z"/>
-            </svg>
-            <label class="switch">
-                <input type="checkbox" id="darkModeToggle" checked>
-                <span class="slider"></span>
-            </label>
-            <svg class="mode-icon light-icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12,7c-2.76,0-5,2.24-5,5s2.24,5,5,5s5-2.24,5-5S14.76,7,12,7L12,7z M2,13h2c0.55,0,1-0.45,1-1s-0.45-1-1-1H2 c-0.55,0-1,0.45-1,1S1.45,13,2,13z M20,13h2c0.55,0,1-0.45,1-1s-0.45-1-1-1h-2c-0.55,0-1,0.45-1,1S19.45,13,20,13z M11,2v2 c0,0.55,0.45,1,1,1s1-0.45,1-1V2c0-0.55-0.45-1-1-1S11,1.45,11,2z M11,20v2c0,0.55,0.45,1,1,1s1-0.45,1-1v-2c0-0.55-0.45-1-1-1 S11,19.45,11,20z M6.34,7.34l1.42-1.42c0.39-0.39,0.39-1.02,0-1.41c-0.39-0.39-1.02-0.39-1.41,0L4.93,5.93 c-0.39,0.39-0.39,1.02,0,1.41C5.32,7.73,5.95,7.73,6.34,7.34z M17.66,16.66l1.42,1.42c0.39,0.39,1.02,0.39,1.41,0 c0.39-0.39,0.39-1.02,0-1.41l-1.42-1.42c-0.39-0.39-1.02-0.39-1.41,0C17.27,15.64,17.27,16.27,17.66,16.66z M4.93,18.07 l1.42,1.42c0.39,0.39,1.02,0.39,1.41,0c0.39-0.39,0.39-1.02,0-1.41l-1.42-1.42c-0.39-0.39-1.02-0.39-1.41,0 C4.54,17.05,4.54,17.68,4.93,18.07z M19.07,5.93l-1.42,1.42c-0.39,0.39-0.39,1.02,0,1.41c0.39,0.39,1.02,0.39,1.41,0l1.42-1.42 c0.39-0.39,0.39-1.02,0-1.41C20.09,5.54,19.46,5.54,19.07,5.93z"/>
-            </svg>
-        </div>
+  <!-- Header -->
+  <div class="top-bar">
+    <button class="lang-btn active-lang" data-lang="de">DE</button>
+    <span style="color: var(--text-secondary);">|</span>
+    <button class="lang-btn" data-lang="en">EN</button>
+    <span style="flex-grow: 1;"></span>
+    <a href="index.html" class="site-title" id="siteTitle">TirzeCalc.de</a>
+    <span style="flex-grow: 1;"></span>
+    <div class="mode-toggle-container">
+      <svg class="mode-icon dark-icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+        <path d="M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-0.92-0.1-1.36c-0.98,1.37-2.58,2.26-4.4,2.26 c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z"></path>
+      </svg>
+      <label class="switch">
+        <input type="checkbox" id="darkModeToggle" checked aria-label="Dark Mode umschalten" />
+        <span class="slider"></span>
+      </label>
+      <svg class="mode-icon light-icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+        <path d="M12,7c-2.76,0-5,2.24-5,5s2.24,5,5,5s5-2.24,5-5S14.76,7,12,7L12,7z M2,13h2c0.55,0,1-0.45,1-1s-0.45-1-1-1H2 c-0.55,0-1,0.45-1,1S1.45,13,2,13z M20,13h2c0.55,0,1-0.45,1-1s-0.45-1-1-1h-2c-0.55,0-1,0.45-1,1S19.45,13,20,13z M11,2v2 c0,0.55,0.45,1,1,1s1-0.45,1-1V2c0-0.55-0.45,1-1,1S11,1.45,11,2z M11,20v2c0,0.55,0.45,1,1,1s1-0.45,1-1v-2c0-0.55-0.45-1-1-1 S11,19.45,11,20z M6.34,7.34l1.42-1.42c0.39-0.39,0.39-1.02,0-1.41c-0.39-0.39,1.02-0.39,1.41,0L4.93,5.93 c-0.39,0.39-0.39,1.02,0,1.41C5.32,7.73,5.95,7.73,6.34,7.34z M17.66,16.66l1.42,1.42c0.39,0.39,1.02,0.39,1.41,0 c0.39-0.39,0.39-1.02,0-1.41l-1.42-1.42c-0.39-0.39-1.02-0.39-1.41,0C17.27,15.64,17.27,16.27,17.66,16.66z M4.93,18.07 l1.42,1.42c0.39,0.39,1.02,0.39,1.41,0c0.39-0.39,0.39-1.02,0-1.41l-1.42-1.42c-0.39-0.39-1.02-0.39-1.41,0 C4.54,17.05,4.54,17.68,4.93,18.07z M19.07,5.93l-1.42,1.42c-0.39,0.39-0.39,1.02,0,1.41c0.39,0.39,1.02,0.39,1.41,0l1.42-1.42 c0.39-0.39,0.39-1.02,0-1.41C20.09,5.54,19.46,5.54,19.07,5.93z"></path>
+      </svg>
+    </div>
+  </div>
+
+  <!-- Hauptinhalt -->
+  <main class="container">
+    <div class="card">
+      <h2 data-key="step_1">1. Pen-Stärke wählen</h2>
+      <div class="pen-selection" id="penSelection">
+        <button class="pen-button" data-mg="2.5">2.5 mg</button>
+        <button class="pen-button" data-mg="5">5 mg</button>
+        <button class="pen-button" data-mg="7.5">7.5 mg</button>
+        <button class="pen-button" data-mg="10">10 mg</button>
+        <button class="pen-button" data-mg="12.5">12.5 mg</button>
+        <button class="pen-button" data-mg="15">15 mg</button>
+      </div>
     </div>
 
-    <div class="container">
-
-        <div class="card">
-            <h2 data-key="step_1">1. Pen-Stärke wählen</h2>
-            <div class="pen-selection" id="penSelection">
-                <button class="pen-button" data-mg="2.5">2.5 mg</button>
-                <button class="pen-button" data-mg="5">5 mg</button>
-                <button class="pen-button" data-mg="7.5">7.5 mg</button>
-                <button class="pen-button" data-mg="10">10 mg</button>
-                <button class="pen-button" data-mg="12.5">12.5 mg</button>
-                <button class="pen-button" data-mg="15">15 mg</button>
-            </div>
-        </div>
-
-        <div class="card">
-            <h2 data-key="step_2">2. Gewünschte Dosis wählen</h2>
-            <div class="dose-slider-container">
-                <p data-key="current_dose" style="text-align: center; margin-bottom: 5px; color: var(--text-secondary);">Aktuelle Dosis: </p>
-                <div class="dose-display"><span id="currentDoseValue">0.00</span> mg</div>
-                
-                <div class="dose-slider-wrapper">
-                    <input type="range" id="doseSlider" min="0" max="0" step="1" value="0" disabled>
-                    <div class="slider-ticks" id="sliderTicks"></div>
-                </div>
-                
-                <div class="dose-info">
-                    <span id="minDoseText">Min: 0.00 mg</span>
-                    <span id="maxDoseText">Max: 15.00 mg</span>
-                </div>
-            </div>
-        </div>
-
-        <div class="result-box">
-            <h3 data-key="result_title">Benötigte Klicks</h3>
-            <div class="kicks-result" id="kicksResult">0</div>
-            <p data-key="result_note" style="color: var(--text-secondary);">Wählen Sie zuerst Pen-Stärke und Dosis.</p>
-        </div>
-        
-    </div>
-
-    <footer>
-        <div class="footer-compact">
-            <span>by Staubi</span>
-            <span class="separator">•</span>
-            <a href="https://github.com/staubi82" target="_blank" rel="noopener noreferrer">GitHub</a>
-            <span class="separator">•</span>
-            <a href="impressum.html" data-key="imprint">Impressum</a>
-            <span class="separator">•</span>
-            <a href="datenschutz.html" data-key="privacy">Datenschutz</a>
-        </div>
-        <p class="footer-disclaimer" data-key="disclaimer">
-            Dieser Rechner dient nur zu Informationszwecken. Konsultieren Sie immer Ihren Arzt oder Apotheker.
+    <div class="card">
+      <h2 data-key="step_2">2. Gewünschte Dosis wählen</h2>
+      <div class="dose-slider-container">
+        <p data-key="current_dose" style="text-align:center;margin-bottom:5px;color:var(--text-secondary);">
+          Aktuelle Dosis:
         </p>
-    </footer>
+        <div class="dose-display"><span id="currentDoseValue">0.00</span> mg</div>
 
-    <script src="script.js?v=2.0"></script>
+        <div class="dose-slider-wrapper">
+          <input type="range" id="doseSlider" min="0" max="0" step="1" value="0" disabled />
+          <div class="slider-ticks" id="sliderTicks"></div>
+        </div>
+
+        <div class="dose-info">
+          <span id="minDoseText">Min: 0.00 mg</span>
+          <span id="maxDoseText">Max: 15.00 mg</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="result-box">
+      <h3 data-key="result_title">Benötigte Klicks</h3>
+      <div class="kicks-result" id="kicksResult">0</div>
+      <p data-key="result_note" style="color: var(--text-secondary);">Wähle zuerst Pen-Stärke und Dosis.</p>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-compact">
+      <span>by Staubi</span>
+      <span class="separator">•</span>
+      <a href="https://github.com/staubi82" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <span class="separator">•</span>
+      <a href="impressum.html" data-key="imprint">Impressum</a>
+      <span class="separator">•</span>
+      <a href="datenschutz.html" data-key="privacy">Datenschutz</a>
+    </div>
+    <p class="footer-disclaimer" data-key="disclaimer">
+      Dieser Rechner dient nur zu Informationszwecken. Konsultieren Sie immer Ihren Arzt oder Apotheker.
+    </p>
+  </footer>
+
+  <script src="script.js?v=2.2"></script>
 </body>
 </html>
