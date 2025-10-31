@@ -1,6 +1,17 @@
 /*
  * Minimalistisches & professionelles Design für TirzeCalc.de
+ * Optimiert für dynamische Vollbild-Mobile-Ansicht
  */
+
+/* Reset für bessere mobile Kompatibilität */
+* {
+    box-sizing: border-box;
+}
+
+html {
+    height: 100%;
+    height: 100dvh; /* Dynamische Viewport-Höhe */
+}
 
 :root {
     /* Dunkler Modus (Standard) */
@@ -37,6 +48,7 @@ body {
     flex-direction: column;
     align-items: center;
     min-height: 100vh;
+    min-height: 100dvh; /* Dynamische Viewport-Höhe für mobile Geräte */
 }
 
 .container {
@@ -233,6 +245,7 @@ body.light-mode .dark-icon {
     box-shadow: 0 0 10px rgba(88, 142, 153, 0.5); 
 }
 
+
 /* --- Dosis Schieberegler --- */
 .dose-display {
     text-align: center;
@@ -242,25 +255,128 @@ body.light-mode .dark-icon {
     color: var(--primary-color);
 }
 
+/* Clean slider design with proper tick marks */
+.dose-slider-wrapper {
+    position: relative;
+    width: 100%;
+    margin: 20px 0;
+    padding: 0 12px;
+}
+
 input[type="range"] {
     width: 100%;
     height: 6px;
     background: var(--border-color);
     border-radius: 3px;
     -webkit-appearance: none;
-    margin: 8px 0;
     cursor: pointer;
+    margin: 0;
 }
 
+/* Tick marks as dots below the slider */
+.slider-ticks {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 8px;
+    padding: 0 6px;
+}
+
+.tick {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: var(--text-secondary);
+    opacity: 0.5;
+}
+
+.tick.active {
+    background-color: var(--primary-color);
+    opacity: 1;
+    transform: scale(1.2);
+}
+
+/* Standard slider thumb */
 input[type="range"]::-webkit-slider-thumb {
     -webkit-appearance: none;
-    height: 20px; 
+    height: 20px;
     width: 20px;
     border-radius: 50%;
     background: var(--primary-color);
     cursor: pointer;
-    border: 3px solid var(--card-background); 
+    border: 3px solid var(--card-background);
     box-shadow: 0 0 5px var(--shadow-color);
+}
+
+/* Firefox thumb */
+input[type="range"]::-moz-range-thumb {
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
+    background: var(--primary-color);
+    cursor: pointer;
+    border: 3px solid var(--card-background);
+    box-shadow: 0 0 5px var(--shadow-color);
+}
+
+/* Larger slider for mobile devices */
+@media (max-width: 768px) {
+    .dose-slider-wrapper {
+        margin: 25px 0;
+        padding: 0 14px;
+    }
+    
+    input[type="range"] {
+        height: 8px;
+    }
+    
+    input[type="range"]::-webkit-slider-thumb {
+        height: 24px;
+        width: 24px;
+    }
+    
+    input[type="range"]::-moz-range-thumb {
+        height: 24px;
+        width: 24px;
+    }
+    
+    .slider-ticks {
+        margin-top: 10px;
+    }
+    
+    .tick {
+        width: 7px;
+        height: 7px;
+    }
+}
+
+@media (max-width: 480px) {
+    .dose-slider-wrapper {
+        margin: 30px 0;
+        padding: 0 16px;
+    }
+    
+    input[type="range"] {
+        height: 10px;
+    }
+    
+    input[type="range"]::-webkit-slider-thumb {
+        height: 28px;
+        width: 28px;
+    }
+    
+    input[type="range"]::-moz-range-thumb {
+        height: 28px;
+        width: 28px;
+    }
+    
+    .slider-ticks {
+        margin-top: 12px;
+    }
+    
+    .tick {
+        width: 8px;
+        height: 8px;
+    }
 }
 
 .dose-info {
@@ -298,43 +414,88 @@ input[type="range"]::-webkit-slider-thumb {
     color: var(--primary-color);
 }
 
-/* --- Footer --- */
+/* --- Footer (Kompakt) --- */
 footer {
-    margin-top: 30px;
+    margin-top: 20px;
     text-align: center;
-    font-size: 0.8em;
     color: var(--text-secondary);
+    padding: 12px 0 8px 0;
+    border-top: 1px solid var(--border-color);
+    font-size: 0.75em;
 }
+
+.footer-compact {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 6px;
+}
+
+.footer-compact .separator {
+    opacity: 0.5;
+}
+
+.footer-disclaimer {
+    font-size: 0.7em;
+    opacity: 0.6;
+    margin: 6px 0 0 0;
+    max-width: 350px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.3;
+}
+
 footer a {
     color: var(--primary-color);
     text-decoration: none;
-    transition: color 0.2s;
+    transition: all 0.2s ease;
+    padding: 1px 3px;
+    border-radius: 2px;
 }
+
 footer a:hover {
     color: var(--text-primary);
+    background-color: rgba(88, 142, 153, 0.1);
 }
 
 /* --- Mobile Optimierung --- */
 @media (max-width: 480px) {
     body {
         padding: 8px 4px;
+        min-height: 100vh;
+        min-height: 100dvh; /* Dynamische Viewport-Höhe */
+        height: 100vh;
+        height: 100dvh; /* Nutzt die komplette verfügbare Höhe */
     }
     
     .container {
         max-width: 100%;
+        width: 100%;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        padding: 0;
+        margin: 0;
     }
     
     .top-bar {
-        margin-bottom: 10px;
+        margin-bottom: 8px;
+        padding: 0 4px;
     }
     
     header {
-        margin-bottom: 20px;
+        margin-bottom: 12px;
+        padding: 0 4px;
     }
     
     .card {
         padding: 12px;
-        margin-bottom: 12px;
+        margin-bottom: 8px;
+        margin-left: 4px;
+        margin-right: 4px;
+        border-radius: 6px;
     }
     
     .pen-selection {
@@ -348,6 +509,20 @@ footer a:hover {
         font-size: 0.9em;
     }
     
+    .pen-info-display {
+        padding: 8px;
+        margin-bottom: 10px;
+        gap: 10px;
+    }
+    
+    .pen-info-label {
+        font-size: 0.7em;
+    }
+    
+    .pen-info-value {
+        font-size: 0.9em;
+    }
+    
     .dose-display {
         font-size: 1.8em;
         margin-bottom: 6px;
@@ -355,7 +530,10 @@ footer a:hover {
     
     .result-box {
         padding: 15px 12px;
-        margin-top: 15px;
+        margin-top: 12px;
+        margin-left: 4px;
+        margin-right: 4px;
+        border-radius: 6px;
     }
     
     .kicks-result {
@@ -374,8 +552,20 @@ footer a:hover {
     }
     
     footer {
-        margin-top: 20px;
-        font-size: 0.7em;
+        margin-top: auto;
+        padding: 10px 8px 6px 8px;
+        font-size: 0.65em;
+    }
+    
+    .footer-compact {
+        gap: 6px;
+        margin-bottom: 4px;
+    }
+    
+    .footer-disclaimer {
+        font-size: 0.6em;
+        margin: 4px 0 0 0;
+        line-height: 1.2;
     }
     
     .dose-info {

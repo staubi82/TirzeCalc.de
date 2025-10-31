@@ -88,5 +88,5 @@ Beiträge sind willkommen! Bitte erstellen Sie einen Pull Request oder öffnen S
 
 ## 📞 Kontakt
 
-- E-Mail: info@tirzecalc.de
+- E-Mail: info@TirzeCalc.de
 - GitHub: [staubi82](https://github.com/staubi82)

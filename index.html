@@ -54,7 +54,10 @@
                 <p data-key="current_dose" style="text-align: center; margin-bottom: 5px; color: var(--text-secondary);">Aktuelle Dosis: </p>
                 <div class="dose-display"><span id="currentDoseValue">0.00</span> mg</div>
                 
-                <input type="range" id="doseSlider" min="0" max="0" step="1" value="0" disabled>
+                <div class="dose-slider-wrapper">
+                    <input type="range" id="doseSlider" min="0" max="0" step="1" value="0" disabled>
+                    <div class="slider-ticks" id="sliderTicks"></div>
+                </div>
                 
                 <div class="dose-info">
                     <span id="minDoseText">Min: 0.00 mg</span>
@@ -72,11 +75,16 @@
     </div>
 
     <footer>
-        <p>by Staubi | <a href="https://github.com/staubi82" target="_blank" rel="noopener noreferrer">GitHub</a></p>
-        <p style="font-size: 0.8em; opacity: 0.8; margin-top: 10px;">
-            <a href="impressum.html">Impressum</a> | <a href="datenschutz.html">Datenschutz</a>
-        </p>
-        <p style="font-size: 0.8em; opacity: 0.6; margin-top: 10px;" data-key="disclaimer">
+        <div class="footer-compact">
+            <span>by Staubi</span>
+            <span class="separator">•</span>
+            <a href="https://github.com/staubi82" target="_blank" rel="noopener noreferrer">GitHub</a>
+            <span class="separator">•</span>
+            <a href="impressum.html" data-key="imprint">Impressum</a>
+            <span class="separator">•</span>
+            <a href="datenschutz.html" data-key="privacy">Datenschutz</a>
+        </div>
+        <p class="footer-disclaimer" data-key="disclaimer">
             Dieser Rechner dient nur zu Informationszwecken. Konsultieren Sie immer Ihren Arzt oder Apotheker.
         </p>
     </footer>

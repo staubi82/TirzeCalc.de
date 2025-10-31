@@ -16,9 +16,27 @@ const penData = {
 
 // Die wählbaren Dosen (1.25mg Schritte)
 const doseSteps = [
-    0.00, 1.25, 2.50, 3.75, 5.00, 6.25, 7.50, 8.75, 
+    0.00, 1.25, 2.50, 3.75, 5.00, 6.25, 7.50, 8.75,
     10.00, 11.25, 12.50, 13.75, 15.00
 ];
+
+function updateSliderTicks(allowedDoses, currentIndex) {
+    const sliderTicks = document.getElementById('sliderTicks');
+    if (!sliderTicks) return;
+    
+    // Clear existing ticks
+    sliderTicks.innerHTML = '';
+    
+    // Create ticks for each allowed dose
+    allowedDoses.forEach((dose, index) => {
+        const tick = document.createElement('div');
+        tick.className = 'tick';
+        if (index === currentIndex) {
+            tick.classList.add('active');
+        }
+        sliderTicks.appendChild(tick);
+    });
+}
 
 const translations = {
     de: {
@@ -32,7 +50,11 @@ const translations = {
         disclaimer: "Dieser Rechner dient nur zu Informationszwecken. Konsultieren Sie immer Ihren Arzt oder Apotheker.",
         'back-to-calculator': "← Zurück zum Rechner",
         'privacy-policy': "Datenschutz",
-        'imprint': "Impressum"
+        'imprint': "Impressum",
+        'selected_pen': "Ausgewählter Pen",
+        'pen_strength': "Pen-Stärke",
+        'per_click': "mg pro Klick",
+        'privacy': "Datenschutz"
     },
     en: {
         title: "TirzeCalc.de Dosage Calculator",
@@ -45,7 +67,11 @@ const translations = {
         disclaimer: "This calculator is for informational purposes only. Always consult your doctor or pharmacist.",
         'back-to-calculator': "← Back to Calculator",
         'privacy-policy': "Privacy Policy",
-        'imprint': "Imprint"
+        'imprint': "Imprint",
+        'selected_pen': "Selected Pen",
+        'pen_strength': "Pen Strength",
+        'per_click': "mg per Click",
+        'privacy': "Privacy"
     }
 };
 
@@ -157,6 +183,7 @@ function updateLanguage(lang) {
     }
 }
 
+
 function handlePenSelection(event) {
     const button = event.target.closest('.pen-button');
     if (!button) return;
@@ -175,7 +202,7 @@ function handlePenSelection(event) {
     // Slider-Range auf die Indices des gefilterten Dosis-Arrays setzen
     doseSlider.min = 0;
     doseSlider.max = allowedDoses.length - 1;
-    doseSlider.step = "1"; 
+    doseSlider.step = "1";
     doseSlider.disabled = false;
     
     // Dosis-Wert und Slider-Position nach Auswahl neu setzen
@@ -188,13 +215,14 @@ function handlePenSelection(event) {
         currentDoseIndex = closestIndex;
     }
 
-
     state.desiredDoseMG = allowedDoses[currentDoseIndex];
     doseSlider.value = currentDoseIndex;
 
     document.getElementById('currentDoseValue').textContent = state.desiredDoseMG.toFixed(2);
     document.getElementById('maxDoseText').textContent = `${state.language === 'de' ? 'Max' : 'Max'}: ${maxDose.toFixed(2)} mg`;
 
+    // Update slider ticks
+    updateSliderTicks(allowedDoses, currentDoseIndex);
 
     calculateKicks();
 }
@@ -209,6 +237,10 @@ function handleDoseChange(event) {
     const dose = allowedDoses[index];
     state.desiredDoseMG = dose;
     document.getElementById('currentDoseValue').textContent = dose.toFixed(2);
+    
+    // Update slider ticks with current position
+    updateSliderTicks(allowedDoses, index);
+    
     calculateKicks();
 }
 
