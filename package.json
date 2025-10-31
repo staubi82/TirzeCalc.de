@@ -1,0 +1,39 @@
+{
+  "name": "tirzecalc.de",
+  "version": "1.0.0",
+  "description": "Mounjaro Dosierungsrechner - Ein einfacher Web-Rechner zur Berechnung der benötigten Injektionsschritte für Mounjaro Pens",
+  "main": "index.html",
+  "scripts": {
+    "start": "python -m http.server 8000",
+    "serve": "npx http-server",
+    "dev": "npx live-server"
+  },
+  "keywords": [
+    "mounjaro",
+    "dosierungsrechner",
+    "diabetes",
+    "health",
+    "calculator",
+    "web-app",
+    "pwa"
+  ],
+  "author": {
+    "name": "Thomas Straub",
+    "email": "info@tirzecalc.de",
+    "url": "https://github.com/staubi82"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/staubi82/TirzeCalc.de.git"
+  },
+  "homepage": "https://tirzecalc.de",
+  "bugs": {
+    "url": "https://github.com/staubi82/TirzeCalc.de/issues"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "devDependencies": {},
+  "dependencies": {}
+}
