@@ -1,0 +1,23 @@
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://tirzecalc.de/sitemap.xml
+
+# Crawl delay (optional)
+Crawl-delay: 1
+
+# Disallow admin areas (if any)
+Disallow: /admin/
+Disallow: /private/
+Disallow: /tmp/
+
+# Allow all main content
+Allow: /index.html
+Allow: /impressum.html
+Allow: /datenschutz.html
+Allow: /impressum_en.html
+Allow: /datenschutz_en.html
+
+# Host
+Host: https://tirzecalc.de

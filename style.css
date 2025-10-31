@@ -44,6 +44,22 @@ body {
   min-height: 100dvh;
 }
 
+/* Auf mobilen Geräten: Footer direkt unter dem Inhalt ohne Zwischenraum */
+@media (max-width: 768px) {
+  body {
+    grid-template-rows: auto auto auto; /* Kein 1fr - Footer direkt unter Inhalt */
+  }
+  
+  .container {
+    padding-bottom: 0; /* Entfernt unteren Padding des Containers */
+  }
+  
+  footer {
+    margin-top: 0; /* Entfernt oberen Margin des Footers */
+    padding-top: 8px; /* Reduziert oberes Padding */
+  }
+}
+
 /* Top-Bar (Header) */
 .top-bar {
   display: flex;
