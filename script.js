@@ -108,12 +108,6 @@ function calculateKicks() {
     resultElement.textContent = requiredKicks;
     noteElement.textContent = translations[state.language].result_title;
     noteElement.style.color = 'var(--text-primary)';
-    
-    // Share-Button aktivieren/deaktivieren
-    const shareBtn = document.getElementById('shareBtn');
-    if (shareBtn) {
-        shareBtn.disabled = !penMg || desiredDose === 0;
-    }
 }
 
 
@@ -260,13 +254,20 @@ function shareResult() {
     const penMg = state.selectedPenMG;
     const desiredDose = state.desiredDoseMG;
     
-    if (!penMg || desiredDose === 0) {
-        return;
-    }
+    // Immer teilen erlauben, auch wenn keine Berechnung vorliegt
+    let shareText;
+    let shareUrl = 'https://tirzecalc.de';
     
-    const kicks = document.getElementById('kicksResult').textContent;
-    const shareText = `${translations[state.language].result_title}: ${kicks} | ${desiredDose.toFixed(2)} mg mit ${penMg} mg Pen | TirzeCalc.de`;
-    const shareUrl = 'https://tirzecalc.de';
+    if (!penMg || desiredDose === 0) {
+        // Teilen der App ohne spezifisches Ergebnis
+        shareText = translations[state.language].language === 'de'
+            ? 'TirzeCalc.de – Tirzepatid Dosis- & Klickrechner'
+            : 'TirzeCalc.de – Tirzepatide Dose & Click Calculator';
+    } else {
+        // Teilen mit spezifischem Ergebnis
+        const kicks = document.getElementById('kicksResult').textContent;
+        shareText = `${translations[state.language].result_title}: ${kicks} | ${desiredDose.toFixed(2)} mg mit ${penMg} mg Pen | TirzeCalc.de`;
+    }
     
     if (navigator.share) {
         // Web Share API verwenden (mobile Geräte)
