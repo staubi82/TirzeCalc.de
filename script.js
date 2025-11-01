@@ -114,79 +114,119 @@ function calculateKicks() {
 // --- UI und Event-Handler ---
 
 function updateLanguage(lang) {
-    state.language = lang;
-    localStorage.setItem('language', lang); // Sprache im localStorage speichern
+  state.language = lang;
+  localStorage.setItem('language', lang); // Sprache im localStorage speichern
 
-    // Seitentitel aktualisieren
-    const pageTitle = document.title;
-    if (pageTitle.includes('Impressum') || pageTitle.includes('Imprint')) {
-        document.title = lang === 'de' ? 'Impressum - TirzeCalc.de' : 'Imprint - TirzeCalc.de';
-    } else if (pageTitle.includes('Datenschutz') || pageTitle.includes('Privacy Policy')) {
-        document.title = lang === 'de' ? 'Datenschutz - TirzeCalc.de' : 'Privacy Policy - TirzeCalc.de';
-    } else if (pageTitle.includes('Dosierungsrechner') || pageTitle.includes('Dosage Calculator')) {
-        document.title = lang === 'de' ? 'TirzeCalc.de - Mounjaro Dosierungsrechner' : 'TirzeCalc.de - Mounjaro Dosage Calculator';
+  // Seitentitel aktualisieren
+  const pageTitle = document.title;
+  if (pageTitle.includes('Impressum') || pageTitle.includes('Imprint')) {
+    document.title = lang === 'de' ? 'Impressum - TirzeCalc.de' : 'Imprint - TirzeCalc.de';
+  } else if (pageTitle.includes('Datenschutz') || pageTitle.includes('Privacy Policy')) {
+    document.title = lang === 'de' ? 'Datenschutz - TirzeCalc.de' : 'Privacy Policy - TirzeCalc.de';
+  } else if (pageTitle.includes('Dosierungsrechner') || pageTitle.includes('Dosage Calculator') || pageTitle.includes('Tirzepatid Dosis- & Klickrechner')) {
+    document.title = lang === 'de' ? 'TirzeCalc.de - Mounjaro Dosierungsrechner' : 'TirzeCalc.de - Mounjaro Dosage Calculator';
+  } else if (pageTitle.includes('Über TirzeCalc.de') || pageTitle.includes('About TirzeCalc.de')) {
+    document.title = lang === 'de' ? 'Über TirzeCalc.de – Tirzepatid Dosis- & Klickrechner' : 'About TirzeCalc.de – Tirzepatide Dose & Click Calculator';
+  }
+
+  document.querySelectorAll('[data-key]').forEach(el => {
+    const key = el.getAttribute('data-key');
+    if (translations[lang][key]) {
+      el.textContent = translations[lang][key];
     }
+  });
 
-    document.querySelectorAll('[data-key]').forEach(el => {
-        const key = el.getAttribute('data-key');
-        if (translations[lang][key]) {
-            el.textContent = translations[lang][key];
-        }
-    });
-
-    document.querySelectorAll('[data-lang-link]').forEach(el => {
-        const key = el.getAttribute('data-lang-link');
-        if (translations[lang][key]) {
-            el.textContent = translations[lang][key];
-            // Passe den href an, wenn es sich um Impressum oder Datenschutz handelt
-            if (key === 'privacy-policy') {
-                el.href = lang === 'de' ? 'datenschutz.html' : 'datenschutz_en.html';
-            } else if (key === 'imprint') {
-                el.href = lang === 'de' ? 'impressum.html' : 'impressum_en.html';
-            } else if (key === 'back-to-calculator') {
-                el.href = 'index.html';
-            }
-        }
-    });
-
-    const maxDose = state.selectedPenMG ? penData[state.selectedPenMG].maxDose : 15.00;
-    const minDoseText = document.getElementById('minDoseText');
-    const maxDoseText = document.getElementById('maxDoseText');
-
-    if (minDoseText) {
-        minDoseText.textContent = `${lang === 'de' ? 'Min' : 'Min'}: 0.00 mg`;
+  document.querySelectorAll('[data-lang-link]').forEach(el => {
+    const key = el.getAttribute('data-lang-link');
+    if (translations[lang][key]) {
+      el.textContent = translations[lang][key];
+      // Passe den href an, wenn es sich um Impressum oder Datenschutz handelt
+      if (key === 'privacy-policy') {
+        el.href = lang === 'de' ? 'datenschutz.html' : 'datenschutz_en.html';
+      } else if (key === 'imprint') {
+        el.href = lang === 'de' ? 'impressum.html' : 'impressum_en.html';
+      } else if (key === 'back-to-calculator') {
+        el.href = 'index.html';
+      }
     }
-    if (maxDoseText) {
-        maxDoseText.textContent = `${lang === 'de' ? 'Max' : 'Max'}: ${maxDose.toFixed(2)} mg`;
-    }
+  });
 
-    document.querySelectorAll('.lang-btn').forEach(btn => {
-        btn.classList.remove('active-lang');
-        if (btn.getAttribute('data-lang') === lang) {
-            btn.classList.add('active-lang');
-        }
-    });
-
-    // Nur calculateKicks aufrufen, wenn die Elemente vorhanden sind (also auf index.html)
-    if (document.getElementById('kicksResult')) {
-        calculateKicks();
+  // Update Menu Items
+  const menuItems = document.querySelectorAll('.menu-item');
+  menuItems.forEach(item => {
+    const href = item.getAttribute('href');
+    const text = item.textContent.trim();
+    
+    if (href === 'index.html') {
+      item.textContent = lang === 'de' ? 'Rechner' : 'Calculator';
+    } else if (href === 'info.html' || href === 'info_en.html') {
+      item.textContent = lang === 'de' ? 'Über die App' : 'About the App';
+      item.href = lang === 'de' ? 'info.html' : 'info_en.html';
+    } else if (href === 'impressum.html' || href === 'impressum_en.html') {
+      item.textContent = lang === 'de' ? 'Impressum' : 'Imprint';
+      item.href = lang === 'de' ? 'impressum.html' : 'impressum_en.html';
+    } else if (href === 'datenschutz.html' || href === 'datenschutz_en.html') {
+      item.textContent = lang === 'de' ? 'Datenschutz' : 'Privacy Policy';
+      item.href = lang === 'de' ? 'datenschutz.html' : 'datenschutz_en.html';
     }
+  });
 
-    // Umleitung für Impressum und Datenschutz Seiten
-    const currentPage = window.location.pathname.split('/').pop();
-    if (currentPage === 'impressum.html' && lang === 'en') {
-        window.location.href = 'impressum_en.html';
-        return;
-    } else if (currentPage === 'impressum_en.html' && lang === 'de') {
-        window.location.href = 'impressum.html';
-        return;
-    } else if (currentPage === 'datenschutz.html' && lang === 'en') {
-        window.location.href = 'datenschutz_en.html';
-        return;
-    } else if (currentPage === 'datenschutz_en.html' && lang === 'de') {
-        window.location.href = 'datenschutz.html';
-        return;
+  // Update Menu Title
+  const menuTitle = document.querySelector('.menu-title');
+  if (menuTitle) {
+    menuTitle.textContent = lang === 'de' ? 'Menü' : 'Menu';
+  }
+
+  const maxDose = state.selectedPenMG ? penData[state.selectedPenMG].maxDose : 15.00;
+  const minDoseText = document.getElementById('minDoseText');
+  const maxDoseText = document.getElementById('maxDoseText');
+
+  if (minDoseText) {
+    minDoseText.textContent = `${lang === 'de' ? 'Min' : 'Min'}: 0.00 mg`;
+  }
+  if (maxDoseText) {
+    maxDoseText.textContent = `${lang === 'de' ? 'Max' : 'Max'}: ${maxDose.toFixed(2)} mg`;
+  }
+
+  document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.classList.remove('active-lang');
+    if (btn.getAttribute('data-lang') === lang) {
+      btn.classList.add('active-lang');
     }
+  });
+
+  // Nur calculateKicks aufrufen, wenn die Elemente vorhanden sind (also auf index.html)
+  if (document.getElementById('kicksResult')) {
+    calculateKicks();
+  }
+
+  // Umleitung für alle Seiten mit Sprachversionen
+  const currentPage = window.location.pathname.split('/').pop();
+  
+  // Impressum
+  if (currentPage === 'impressum.html' && lang === 'en') {
+    window.location.href = 'impressum_en.html';
+    return;
+  } else if (currentPage === 'impressum_en.html' && lang === 'de') {
+    window.location.href = 'impressum.html';
+    return;
+  }
+  // Datenschutz
+  else if (currentPage === 'datenschutz.html' && lang === 'en') {
+    window.location.href = 'datenschutz_en.html';
+    return;
+  } else if (currentPage === 'datenschutz_en.html' && lang === 'de') {
+    window.location.href = 'datenschutz.html';
+    return;
+  }
+  // Info-Seiten
+  else if (currentPage === 'info.html' && lang === 'en') {
+    window.location.href = 'info_en.html';
+    return;
+  } else if (currentPage === 'info_en.html' && lang === 'de') {
+    window.location.href = 'info.html';
+    return;
+  }
 }
 
 
@@ -252,7 +292,8 @@ function handleDoseChange(event) {
 
 function shareResult() {
     const shareUrl = 'https://tirzecalc.de';
-    const shareText = translations[state.language].language === 'de'
+    const currentLang = localStorage.getItem('language') || 'de';
+    const shareText = currentLang === 'de'
         ? 'TirzeCalc.de – Kostenloser Tirzepatid Dosierungsrechner für Mounjaro & KwikPen'
         : 'TirzeCalc.de – Free Tirzepatide Dosage Calculator for Mounjaro & KwikPen';
     
@@ -271,7 +312,8 @@ function shareResult() {
             // Erfolgsmeldung anzeigen
             const shareBtn = document.getElementById('shareBtn');
             const originalTitle = shareBtn.getAttribute('aria-label');
-            shareBtn.setAttribute('aria-label', translations[state.language].share_success);
+            const successText = currentLang === 'de' ? 'Link kopiert!' : 'Link copied!';
+            shareBtn.setAttribute('aria-label', successText);
             setTimeout(() => {
                 shareBtn.setAttribute('aria-label', originalTitle);
             }, 2000);
@@ -284,56 +326,101 @@ function shareResult() {
     }
 }
 
+// Hamburger Menu Funktionen
+function openMenu() {
+  const menuOverlay = document.getElementById('menuOverlay');
+  if (menuOverlay) {
+    menuOverlay.classList.add('active');
+    document.body.style.overflow = 'hidden'; // Verhindert Scrollen im Hintergrund
+  }
+}
+
+function closeMenu() {
+  const menuOverlay = document.getElementById('menuOverlay');
+  if (menuOverlay) {
+    menuOverlay.classList.remove('active');
+    document.body.style.overflow = ''; // Erlaubt wieder Scrollen
+  }
+}
+
 function setupEventListeners() {
-    // Nur Event-Listener für Elemente setzen, die existieren
-    const penSelection = document.getElementById('penSelection');
-    const doseSlider = document.getElementById('doseSlider');
-    const darkModeToggle = document.getElementById('darkModeToggle');
-    const shareBtn = document.getElementById('shareBtn');
+  // Nur Event-Listener für Elemente setzen, die existieren
+  const penSelection = document.getElementById('penSelection');
+  const doseSlider = document.getElementById('doseSlider');
+  const shareBtn = document.getElementById('shareBtn');
+  const hamburgerBtn = document.getElementById('hamburgerBtn');
+  const menuClose = document.getElementById('menuClose');
+  const menuOverlay = document.getElementById('menuOverlay');
 
-    if (penSelection) {
-        penSelection.addEventListener('click', handlePenSelection);
-    }
-    
-    if (doseSlider) {
-        doseSlider.addEventListener('input', handleDoseChange);
-    }
+  if (penSelection) {
+    penSelection.addEventListener('click', handlePenSelection);
+  }
+  
+  if (doseSlider) {
+    doseSlider.addEventListener('input', handleDoseChange);
+  }
+  
+  if (shareBtn) {
+    shareBtn.addEventListener('click', shareResult);
+  }
 
-    if (darkModeToggle) {
-        darkModeToggle.addEventListener('change', (e) => {
-            const isDarkMode = e.target.checked;
-            document.body.classList.toggle('light-mode', !isDarkMode);
-            localStorage.setItem('darkMode', isDarkMode ? 'enabled' : 'disabled');
-        });
-    }
-    
-    if (shareBtn) {
-        shareBtn.addEventListener('click', shareResult);
-    }
-    
-    document.querySelectorAll('.lang-btn').forEach(btn => {
-        btn.addEventListener('click', (e) => {
-            updateLanguage(e.target.getAttribute('data-lang'));
-        });
+  // Hamburger Menu Event Listener
+  if (hamburgerBtn) {
+    hamburgerBtn.addEventListener('click', openMenu);
+  }
+
+  if (menuClose) {
+    menuClose.addEventListener('click', closeMenu);
+  }
+
+  if (menuOverlay) {
+    menuOverlay.addEventListener('click', (e) => {
+      if (e.target === menuOverlay) {
+        closeMenu();
+      }
     });
+  }
 
-    // Initialisiere Dark Mode basierend auf localStorage
-    const savedDarkMode = localStorage.getItem('darkMode');
-    if (savedDarkMode === 'disabled') {
-        document.body.classList.add('light-mode');
-        if (darkModeToggle) {
-            darkModeToggle.checked = false;
-        }
-    } else {
-        document.body.classList.remove('light-mode');
-        if (darkModeToggle) {
-            darkModeToggle.checked = true;
-        }
+  // Dark Mode Toggle Event Listener (delegiert)
+  document.addEventListener('change', (e) => {
+    if (e.target && e.target.id === 'darkModeToggle') {
+      const isDarkMode = e.target.checked;
+      document.body.classList.toggle('light-mode', !isDarkMode);
+      localStorage.setItem('darkMode', isDarkMode ? 'enabled' : 'disabled');
     }
+  });
 
-    // Initialisiere Sprache beim Laden der Seite
-    const initialLang = localStorage.getItem('language') || 'de';
-    updateLanguage(initialLang);
+  // Schließe Menu mit Escape-Taste
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      closeMenu();
+    }
+  });
+  
+  document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      updateLanguage(e.target.getAttribute('data-lang'));
+    });
+  });
+
+  // Initialisiere Dark Mode basierend auf localStorage
+  const savedDarkMode = localStorage.getItem('darkMode');
+  const darkModeToggle = document.getElementById('darkModeToggle');
+  if (savedDarkMode === 'disabled') {
+    document.body.classList.add('light-mode');
+    if (darkModeToggle) {
+      darkModeToggle.checked = false;
+    }
+  } else {
+    document.body.classList.remove('light-mode');
+    if (darkModeToggle) {
+      darkModeToggle.checked = true;
+    }
+  }
+
+  // Initialisiere Sprache beim Laden der Seite
+  const initialLang = localStorage.getItem('language') || 'de';
+  updateLanguage(initialLang);
 }
 
 // Warte auf DOMContentLoaded bevor Event-Listener gesetzt werden
