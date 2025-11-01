@@ -251,23 +251,10 @@ function handleDoseChange(event) {
 }
 
 function shareResult() {
-    const penMg = state.selectedPenMG;
-    const desiredDose = state.desiredDoseMG;
-    
-    // Immer teilen erlauben, auch wenn keine Berechnung vorliegt
-    let shareText;
-    let shareUrl = 'https://tirzecalc.de';
-    
-    if (!penMg || desiredDose === 0) {
-        // Teilen der App ohne spezifisches Ergebnis
-        shareText = translations[state.language].language === 'de'
-            ? 'TirzeCalc.de – Tirzepatid Dosis- & Klickrechner'
-            : 'TirzeCalc.de – Tirzepatide Dose & Click Calculator';
-    } else {
-        // Teilen mit spezifischem Ergebnis
-        const kicks = document.getElementById('kicksResult').textContent;
-        shareText = `${translations[state.language].result_title}: ${kicks} | ${desiredDose.toFixed(2)} mg mit ${penMg} mg Pen | TirzeCalc.de`;
-    }
+    const shareUrl = 'https://tirzecalc.de';
+    const shareText = translations[state.language].language === 'de'
+        ? 'TirzeCalc.de – Kostenloser Tirzepatid Dosierungsrechner für Mounjaro & KwikPen'
+        : 'TirzeCalc.de – Free Tirzepatide Dosage Calculator for Mounjaro & KwikPen';
     
     if (navigator.share) {
         // Web Share API verwenden (mobile Geräte)
@@ -281,7 +268,7 @@ function shareResult() {
     } else if (navigator.clipboard) {
         // Fallback: In Zwischenablage kopieren
         navigator.clipboard.writeText(shareText + ' ' + shareUrl).then(() => {
-            // Erfolgsmeldung anzeigen (könnte mit einem Tooltip erweitert werden)
+            // Erfolgsmeldung anzeigen
             const shareBtn = document.getElementById('shareBtn');
             const originalTitle = shareBtn.getAttribute('aria-label');
             shareBtn.setAttribute('aria-label', translations[state.language].share_success);
