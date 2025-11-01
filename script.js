@@ -54,7 +54,10 @@ const translations = {
         'selected_pen': "Ausgewählter Pen",
         'pen_strength': "Pen-Stärke",
         'per_click': "mg pro Klick",
-        'privacy': "Datenschutz"
+        'privacy': "Datenschutz",
+        'share_result': "Ergebnis teilen",
+        'share_success': "Ergebnis wurde kopiert!",
+        'share_error': "Teilen fehlgeschlagen"
     },
     en: {
         title: "TirzeCalc.de Dosage Calculator",
@@ -71,7 +74,10 @@ const translations = {
         'selected_pen': "Selected Pen",
         'pen_strength': "Pen Strength",
         'per_click': "mg per Click",
-        'privacy': "Privacy"
+        'privacy': "Privacy",
+        'share_result': "Share result",
+        'share_success': "Result copied!",
+        'share_error': "Share failed"
     }
 };
 
@@ -100,8 +106,14 @@ function calculateKicks() {
     }
     
     resultElement.textContent = requiredKicks;
-    noteElement.textContent = translations[state.language].result_title; 
+    noteElement.textContent = translations[state.language].result_title;
     noteElement.style.color = 'var(--text-primary)';
+    
+    // Share-Button aktivieren/deaktivieren
+    const shareBtn = document.getElementById('shareBtn');
+    if (shareBtn) {
+        shareBtn.disabled = !penMg || desiredDose === 0;
+    }
 }
 
 
@@ -244,11 +256,52 @@ function handleDoseChange(event) {
     calculateKicks();
 }
 
+function shareResult() {
+    const penMg = state.selectedPenMG;
+    const desiredDose = state.desiredDoseMG;
+    
+    if (!penMg || desiredDose === 0) {
+        return;
+    }
+    
+    const kicks = document.getElementById('kicksResult').textContent;
+    const shareText = `${translations[state.language].result_title}: ${kicks} | ${desiredDose.toFixed(2)} mg mit ${penMg} mg Pen | TirzeCalc.de`;
+    const shareUrl = 'https://tirzecalc.de';
+    
+    if (navigator.share) {
+        // Web Share API verwenden (mobile Geräte)
+        navigator.share({
+            title: 'TirzeCalc.de',
+            text: shareText,
+            url: shareUrl
+        }).catch(error => {
+            console.log('Share failed:', error);
+        });
+    } else if (navigator.clipboard) {
+        // Fallback: In Zwischenablage kopieren
+        navigator.clipboard.writeText(shareText + ' ' + shareUrl).then(() => {
+            // Erfolgsmeldung anzeigen (könnte mit einem Tooltip erweitert werden)
+            const shareBtn = document.getElementById('shareBtn');
+            const originalTitle = shareBtn.getAttribute('aria-label');
+            shareBtn.setAttribute('aria-label', translations[state.language].share_success);
+            setTimeout(() => {
+                shareBtn.setAttribute('aria-label', originalTitle);
+            }, 2000);
+        }).catch(error => {
+            console.log('Copy failed:', error);
+        });
+    } else {
+        // Letzter Fallback: Alert
+        alert(shareText + '\n' + shareUrl);
+    }
+}
+
 function setupEventListeners() {
     // Nur Event-Listener für Elemente setzen, die existieren
     const penSelection = document.getElementById('penSelection');
     const doseSlider = document.getElementById('doseSlider');
     const darkModeToggle = document.getElementById('darkModeToggle');
+    const shareBtn = document.getElementById('shareBtn');
 
     if (penSelection) {
         penSelection.addEventListener('click', handlePenSelection);
@@ -264,6 +317,10 @@ function setupEventListeners() {
             document.body.classList.toggle('light-mode', !isDarkMode);
             localStorage.setItem('darkMode', isDarkMode ? 'enabled' : 'disabled');
         });
+    }
+    
+    if (shareBtn) {
+        shareBtn.addEventListener('click', shareResult);
     }
     
     document.querySelectorAll('.lang-btn').forEach(btn => {
