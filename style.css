@@ -112,10 +112,10 @@ body {
 .site-title {
   color: var(--text-primary);
   text-decoration: none;
-  font-weight: 600;
-  font-size: 1.1em;
-  padding: 4px 8px;
-  border-radius: 4px;
+  font-weight: 700;
+  font-size: 1.3em;
+  padding: 6px 12px;
+  border-radius: 6px;
   transition: color .2s, background-color .2s;
   position: absolute;
   left: 50%;
@@ -610,8 +610,9 @@ input[type="range"]::-moz-range-thumb {
   }
   
   .site-title {
-    font-size: 1em;
-    padding: 6px 8px;
+    font-size: 1.2em;
+    padding: 8px 12px;
+    font-weight: 700;
   }
   
   .hamburger-btn {
