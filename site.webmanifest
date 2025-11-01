@@ -1,6 +1,6 @@
 {
   "name": "TirzeCalc.de Dosierungsrechner",
-  "short_name": "TirzeCalc.de",
+  "short_name": "TirzeCalc",
   "description": "Mounjaro Dosierungsrechner für Tirzepatide",
   "start_url": "/",
   "scope": "/",

@@ -595,6 +595,35 @@ input[type="range"]::-moz-range-thumb {
 
 /* Responsive Tweaks */
 @media (max-width: 768px) {
+  /* Header Anpassungen für Mobile */
+  .main-header {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background: var(--background);
+  }
+  
+  .header-content {
+    padding: 10px 12px;
+  }
+  
+  .site-title {
+    font-size: 1em;
+    padding: 6px 8px;
+  }
+  
+  .hamburger-btn {
+    padding: 6px;
+  }
+  
+  .hamburger-btn span {
+    width: 18px;
+  }
+  
+  .share-btn {
+    padding: 5px;
+  }
+  
   .dose-display { font-size: 2.2em; }
   input[type="range"] { height: 8px; }
   input[type="range"]::-webkit-slider-thumb,
