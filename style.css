@@ -47,7 +47,7 @@ body {
 /* Auf mobilen Geräten: Footer direkt unter dem Inhalt ohne Zwischenraum */
 @media (max-width: 768px) {
   body {
-    grid-template-rows: auto auto auto; /* Kein 1fr - Footer direkt unter Inhalt */
+    grid-template-rows: auto 1fr auto; /* Header bleibt sichtbar, Inhalt scrollbar, Footer unten */
   }
   
   .container {
@@ -601,10 +601,12 @@ input[type="range"]::-moz-range-thumb {
     top: 0;
     z-index: 1000;
     background: var(--background);
+    min-height: 50px; /* Sichert Header-Höhe auf Mobile */
   }
   
   .header-content {
     padding: 10px 12px;
+    min-height: 50px; /* Sichert Header-Inhalt-Höhe */
   }
   
   .site-title {
@@ -622,6 +624,11 @@ input[type="range"]::-moz-range-thumb {
   
   .share-btn {
     padding: 5px;
+  }
+  
+  /* Container Anpassungen für bessere Mobile-Ansicht */
+  .container {
+    padding-top: 5px; /* Reduziert oberes Padding für mehr Platz */
   }
   
   .dose-display { font-size: 2.2em; }
