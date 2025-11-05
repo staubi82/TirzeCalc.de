@@ -11,7 +11,7 @@ html { height: 100dvh; }
 
 /* Theme Vars */
 :root {
-  --background: url('https://oeffwetter.de/hintergrund.jpg');
+  --background: url('hintergrund.jpg');
   --background-fallback: #2563eb;
   --text-primary: #ffffff;
   --text-secondary: #e2e8f0;
