@@ -11,33 +11,40 @@ html { height: 100dvh; }
 
 /* Theme Vars */
 :root {
-  --background: #1c1c1c;
-  --text-primary: #f0f0f0;
-  --text-secondary: #9a9a9a;
-  --card-background: #282828;
-  --border-color: #383838;
-  --primary-color: #588e99;
-  --shadow-color: rgba(0, 0, 0, 0.7);
+  --background: url('https://oeffwetter.de/hintergrund.jpg');
+  --background-fallback: #2563eb;
+  --text-primary: #ffffff;
+  --text-secondary: #e2e8f0;
+  --card-background: rgba(15, 23, 42, 0.85);
+  --border-color: rgba(255, 255, 255, 0.2);
+  --primary-color: #60a5fa;
+  --shadow-color: rgba(0, 0, 0, 0.5);
   --pen-color-active: var(--primary-color);
 }
 
 /* Light Mode */
 body.light-mode {
-  --background: #f0f0f0;
-  --text-primary: #1c1c1c;
-  --text-secondary: #666;
-  --card-background: #ffffff;
-  --border-color: #e0e0e0;
-  --shadow-color: rgba(0, 0, 0, 0.1);
+  --background: url('https://oeffwetter.de/hintergrund.jpg');
+  --background-fallback: #93c5fd;
+  --text-primary: #1e293b;
+  --text-secondary: #475569;
+  --card-background: rgba(255, 255, 255, 0.95);
+  --border-color: rgba(30, 41, 59, 0.2);
+  --shadow-color: rgba(0, 0, 0, 0.2);
 }
 
 /* Seitenraster: Header / Main / Footer passt sich Bildschirmhöhe an */
 body {
   margin: 0;
-  background: var(--background);
+  background: var(--background-fallback);
+  background-image: var(--background);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
   color: var(--text-primary);
   font-family: 'Inter','Segoe UI',sans-serif;
-  transition: background-color .4s, color .4s;
+  transition: background .4s, color .4s;
 
   display: grid;
   grid-template-rows: auto 1fr auto;  /* Header – Inhalt – Footer */
@@ -63,11 +70,18 @@ body {
 /* Main Header */
 .main-header {
   width: 100%;
-  background: var(--background);
+  background: rgba(15, 23, 42, 0.8);
   border-bottom: 1px solid var(--border-color);
   position: sticky;
   top: 0;
   z-index: 100;
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+}
+
+/* Light Mode Header */
+body.light-mode .main-header {
+  background: rgba(255, 255, 255, 0.9);
 }
 
 .header-content {
@@ -603,8 +617,13 @@ input[type="range"]::-moz-range-thumb {
     position: sticky;
     top: 0;
     z-index: 1000;
-    background: var(--background);
+    background: rgba(15, 23, 42, 0.9);
     min-height: 50px; /* Sichert Header-Höhe auf Mobile */
+  }
+  
+  /* Light Mode Mobile Header */
+  body.light-mode .main-header {
+    background: rgba(255, 255, 255, 0.95);
   }
   
   .header-content {
