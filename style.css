@@ -24,7 +24,7 @@ html { height: 100dvh; }
 
 /* Light Mode */
 body.light-mode {
-  --background: url('https://oeffwetter.de/hintergrund.jpg');
+  --background: url('hintergrund.jpg');
   --background-fallback: #93c5fd;
   --text-primary: #1e293b;
   --text-secondary: #475569;
