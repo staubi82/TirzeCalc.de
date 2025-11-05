@@ -11,7 +11,7 @@ html { height: 100dvh; }
 
 /* Theme Vars */
 :root {
-  --background: url('hintergrund.jpg');
+  --background: url('/hintergrund.jpg');
   --background-fallback: #2563eb;
   --text-primary: #ffffff;
   --text-secondary: #e2e8f0;
@@ -24,7 +24,7 @@ html { height: 100dvh; }
 
 /* Light Mode */
 body.light-mode {
-  --background: url('hintergrund.jpg');
+  --background: url('/hintergrund.jpg');
   --background-fallback: #93c5fd;
   --text-primary: #1e293b;
   --text-secondary: #475569;
