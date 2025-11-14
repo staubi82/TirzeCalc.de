@@ -85,15 +85,21 @@ const translations = {
 // --- Hauptlogik ---
 function calculateKicks() {
     const penMg = state.selectedPenMG;
-    const desiredDose = state.desiredDoseMG;
+    let desiredDose = state.desiredDoseMG;
     const resultElement = document.getElementById('kicksResult');
     const noteElement = document.querySelector('.result-box p');
+    const halveDoseCheckbox = document.getElementById('halveDose');
 
     if (!penMg || desiredDose === 0) {
         resultElement.textContent = 0;
         noteElement.textContent = translations[state.language].result_note;
         noteElement.style.color = 'var(--text-secondary)';
         return;
+    }
+
+    // Prüfe ob die Dosis halbiert werden soll
+    if (halveDoseCheckbox && halveDoseCheckbox.checked) {
+        desiredDose = desiredDose / 2;
     }
 
     const data = penData[penMg];
@@ -106,8 +112,24 @@ function calculateKicks() {
     }
     
     resultElement.textContent = requiredKicks;
-    noteElement.textContent = translations[state.language].result_title;
+    const halveText = (halveDoseCheckbox && halveDoseCheckbox.checked) ? ' (halbiert)' : '';
+    noteElement.textContent = translations[state.language].result_title + halveText;
     noteElement.style.color = 'var(--text-primary)';
+}
+
+// Funktion zum Aktualisieren der Dosisanzeige
+function updateDoseDisplay() {
+    const currentDoseValue = document.getElementById('currentDoseValue');
+    const halveDoseCheckbox = document.getElementById('halveDose');
+    
+    if (!currentDoseValue) return;
+    
+    let displayDose = state.desiredDoseMG;
+    if (halveDoseCheckbox && halveDoseCheckbox.checked) {
+        displayDose = state.desiredDoseMG / 2;
+    }
+    
+    currentDoseValue.textContent = displayDose.toFixed(2);
 }
 
 
@@ -264,7 +286,7 @@ function handlePenSelection(event) {
     state.desiredDoseMG = allowedDoses[currentDoseIndex];
     doseSlider.value = currentDoseIndex;
 
-    document.getElementById('currentDoseValue').textContent = state.desiredDoseMG.toFixed(2);
+    updateDoseDisplay();
     document.getElementById('maxDoseText').textContent = `${state.language === 'de' ? 'Max' : 'Max'}: ${maxDose.toFixed(2)} mg`;
 
     // Update slider ticks
@@ -282,7 +304,7 @@ function handleDoseChange(event) {
     
     const dose = allowedDoses[index];
     state.desiredDoseMG = dose;
-    document.getElementById('currentDoseValue').textContent = dose.toFixed(2);
+    updateDoseDisplay();
     
     // Update slider ticks with current position
     updateSliderTicks(allowedDoses, index);
@@ -347,6 +369,7 @@ function setupEventListeners() {
   // Nur Event-Listener für Elemente setzen, die existieren
   const penSelection = document.getElementById('penSelection');
   const doseSlider = document.getElementById('doseSlider');
+  const halveDoseCheckbox = document.getElementById('halveDose');
   const shareBtn = document.getElementById('shareBtn');
   const hamburgerBtn = document.getElementById('hamburgerBtn');
   const menuClose = document.getElementById('menuClose');
@@ -358,6 +381,13 @@ function setupEventListeners() {
   
   if (doseSlider) {
     doseSlider.addEventListener('input', handleDoseChange);
+  }
+  
+  if (halveDoseCheckbox) {
+    halveDoseCheckbox.addEventListener('change', function() {
+      updateDoseDisplay();
+      calculateKicks();
+    });
   }
   
   if (shareBtn) {
